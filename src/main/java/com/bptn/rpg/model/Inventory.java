@@ -3,6 +3,8 @@ package com.bptn.rpg.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bptn.rpg.model.item.Item;
+
 public class Inventory {
 	private int gold;
 	private List<Item> items;

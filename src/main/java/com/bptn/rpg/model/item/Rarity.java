@@ -1,4 +1,4 @@
-package com.bptn.rpg.model;
+package com.bptn.rpg.model.item;
 
 public enum Rarity {
 	COMMON("Common"), UNCOMMON("Uncommon"), RARE("Rare"), EPIC("Epic"), LEGENDARY("Legendary");

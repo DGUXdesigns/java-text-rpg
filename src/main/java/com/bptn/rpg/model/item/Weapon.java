@@ -1,4 +1,4 @@
-package com.bptn.rpg.model;
+package com.bptn.rpg.model.item;
 
 public class Weapon extends Item {
 	private int strength;

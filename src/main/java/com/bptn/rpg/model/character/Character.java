@@ -1,4 +1,6 @@
-package com.bptn.rpg.model;
+package com.bptn.rpg.model.character;
+
+import com.bptn.rpg.model.Inventory;
 
 public class Character {
 	private String name;

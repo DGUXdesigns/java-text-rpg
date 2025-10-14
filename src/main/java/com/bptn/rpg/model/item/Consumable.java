@@ -1,4 +1,4 @@
-package com.bptn.rpg.model;
+package com.bptn.rpg.model.item;
 
 public class Consumable extends Item {
 	private int potency;
