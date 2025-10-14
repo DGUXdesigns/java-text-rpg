@@ -53,18 +53,22 @@ public class Inventory {
 		return items;
 	}
 
-	public void printInventory() {
-		int index = 1;
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
 
 		if (items.isEmpty()) {
-			System.out.println("Inventory is empty.");
+			sb.append("Inventory is empty.");
 		} else {
-			System.out.println("--- Inventory ---");
+			sb.append("--- Inventory ---\n");
+			int index = 1;
 			for (Item item : items) {
-				System.out.println(index + ". " + item.getName());
+				sb.append(index).append(". ").append(item.getName()).append("\n");
 				index++;
 			}
 		}
+
+		return sb.toString();
 	}
 
 }
