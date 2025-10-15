@@ -1,6 +1,6 @@
 package com.bptn.rpg.model.character;
 
-public class Character {
+public abstract class Character implements Commands {
 	private String name;
 	private int health;
 	private int strength;
@@ -31,10 +31,5 @@ public class Character {
 	public void addStrength(int amount) {
 		strength += amount;
 		System.out.println("Strength: " + (strength - amount) + " > " + strength);
-	}
-
-	public static void main(String[] args) {
-		Character player = new Character("Hero", 100, 50);
-		player.addStrength(10);
 	}
 }
