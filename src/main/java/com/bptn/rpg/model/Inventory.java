@@ -62,6 +62,7 @@ public class Inventory {
 		if (items.isEmpty()) {
 			sb.append("Inventory is empty.");
 		} else {
+			sb.append("Gold: ").append(gold).append("\n");
 			sb.append("--- Inventory ---\n");
 			int index = 1;
 			for (Item item : items) {
