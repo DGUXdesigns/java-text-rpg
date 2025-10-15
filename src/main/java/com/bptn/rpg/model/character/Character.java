@@ -1,18 +1,14 @@
 package com.bptn.rpg.model.character;
 
-import com.bptn.rpg.model.Inventory;
-
 public class Character {
 	private String name;
-	private int hp;
-	private int xp;
-	private Inventory inventory;
+	private int health;
+	private int strength;
 
-	public Character(String name) {
+	public Character(String name, int health, int strength) {
 		this.name = name;
-		this.hp = 100;
-		this.xp = 0;
-		this.inventory = new Inventory();
+		this.health = health;
+		this.strength = strength;
 	}
 
 	// Getters and Setters.
@@ -20,23 +16,25 @@ public class Character {
 		return name;
 	}
 
-	public int getHp() {
-		return hp;
+	public int getHealth() {
+		return health;
 	}
 
-	public void setHp(int hp) {
-		this.hp = hp;
+	public void setHealth(int health) {
+		this.health = health;
 	}
 
-	public int getXp() {
-		return xp;
+	public int getStrength() {
+		return strength;
 	}
 
-	public void setXp(int xp) {
-		this.xp = xp;
+	public void addStrength(int amount) {
+		strength += amount;
+		System.out.println("Strength: " + (strength - amount) + " > " + strength);
 	}
 
-	public Inventory getInventory() {
-		return inventory;
+	public static void main(String[] args) {
+		Character player = new Character("Hero", 100, 50);
+		player.addStrength(10);
 	}
 }
