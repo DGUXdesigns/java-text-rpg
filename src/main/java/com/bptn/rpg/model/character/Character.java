@@ -41,4 +41,15 @@ public abstract class Character implements Commands {
 	public void setDefending(boolean defending) {
 		this.defending = defending;
 	}
+
+	public void takeDamage(int damage) {
+		// Handles damage if unit is defending
+		if (defending) {
+			damage /= 2; // reduces damage by 50%
+			System.out.print(getName() + " was defending and reduced the damage to " + damage + "!");
+			defending = false;
+		}
+
+		setHealth(Math.max(0, health - damage));
+	}
 }
