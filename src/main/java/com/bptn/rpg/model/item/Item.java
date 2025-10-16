@@ -4,13 +4,13 @@ public class Item {
 	private String name;
 	private ItemType type;
 	private Rarity rarity;
-	private int value;
+	private int price;
 
-	public Item(String name, ItemType type, Rarity rarity, int value) {
+	public Item(String name, ItemType type, Rarity rarity, int price) {
 		this.name = name;
 		this.type = type;
 		this.rarity = rarity;
-		this.value = value;
+		this.price = price;
 	}
 
 	// Getters & Setters
@@ -26,8 +26,8 @@ public class Item {
 		return rarity;
 	}
 
-	public int getValue() {
-		return value;
+	public int getPrice() {
+		return price;
 	}
 
 	@Override

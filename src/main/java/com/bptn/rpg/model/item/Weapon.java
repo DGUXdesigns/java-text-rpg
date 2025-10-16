@@ -3,8 +3,8 @@ package com.bptn.rpg.model.item;
 public class Weapon extends Item {
 	private int damage;
 
-	public Weapon(String name, Rarity rarity, int value, int damage) {
-		super(name, ItemType.WEAPON, rarity, value);
+	public Weapon(String name, Rarity rarity, int price, int damage) {
+		super(name, ItemType.WEAPON, rarity, price);
 		this.damage = damage;
 	}
 
