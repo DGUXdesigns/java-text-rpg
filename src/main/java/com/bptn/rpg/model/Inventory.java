@@ -28,11 +28,12 @@ public class Inventory {
 	}
 
 	public boolean removeGold(int amount) {
-		if (amount > 0) {
+		if (amount >= gold) {
 			gold -= amount;
 			return true;
 		}
 
+		System.out.print("Not enough gold!");
 		return false;
 	}
 
@@ -66,7 +67,7 @@ public class Inventory {
 			sb.append("--- Inventory ---\n");
 			int index = 1;
 			for (Item item : items) {
-				sb.append(index).append(". ").append(item.getName()).append("\n");
+				sb.append(index).append(". ").append(item.toString()).append("\n");
 				index++;
 			}
 		}
