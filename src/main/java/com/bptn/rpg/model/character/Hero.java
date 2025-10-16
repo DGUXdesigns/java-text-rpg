@@ -20,7 +20,7 @@ public class Hero extends Character {
 		this.inventory = new Inventory();
 
 		// Give player starting weapon and equip it
-		Weapon woodenSword = new Weapon("Wooden Sword", Rarity.COMMON, 30, 50);
+		Weapon woodenSword = new Weapon("Wooden Sword", Rarity.COMMON, 30, 5);
 		inventory.addItem(woodenSword);
 
 		this.weapon = woodenSword;
