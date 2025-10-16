@@ -74,7 +74,6 @@ public class Hero extends Character {
 		addStrength(5);
 	}
 
-	// TODO: Add combat Commands
 	@Override
 	public void attack(Character target) {
 		// Calculate total damage
