@@ -21,6 +21,7 @@ public class Inventory {
 	public boolean addGold(int amount) {
 		if (amount > 0) {
 			gold += amount;
+			System.out.println(amount + " gold added to your inventory.");
 			return true;
 		}
 
