@@ -1,6 +1,7 @@
 package com.bptn.rpg.model.character;
 
 import com.bptn.rpg.model.Inventory;
+import com.bptn.rpg.model.item.Consumable;
 import com.bptn.rpg.model.item.Rarity;
 import com.bptn.rpg.model.item.Weapon;
 
@@ -74,5 +75,45 @@ public class Hero extends Character {
 	}
 
 	// TODO: Add combat Commands
+	@Override
+	public void attack(Character target) {
+		// Calculate total damage
+		int attackPower = weapon.getDamage() + getStrength();
+		int levelBonus = (int) (attackPower * (0.1 * level));
+		int totalDamage = attackPower + levelBonus;
 
+		// apply damage to enemy
+		System.out.println(getName() + " dealt " + totalDamage + " damage!");
+		target.takeDamage(totalDamage);
+	}
+
+	@Override
+	public void defend() {
+		setDefending(true);
+		System.out.println(getName() + "takes a defensive stance and will take reduced damage next turn");
+	}
+
+	@Override
+	public void useItem(Consumable item, Character target) {
+		// Calculate amount to be healed
+		int healAmount = target.getHealth() + item.getPotency();
+		int health = Math.min(healAmount, getMaxHealth()); // Ensure health doesn't exceed max health.
+
+		// Apply new health to hero
+		setHealth(health);
+		System.out.println(getName() + " recovered " + item.getPotency() + " using a " + item.getName());
+	}
+
+	@Override
+	public boolean flee() {
+		double fleeChance = Math.random();
+		// 50% chance to escape
+		if (fleeChance > 0.5) {
+			System.out.println(getName() + " successfully fled the battle!");
+			return true;
+		} else {
+			System.out.println(getName() + " tried to flee but couldn't get away!");
+			return false;
+		}
+	}
 }
