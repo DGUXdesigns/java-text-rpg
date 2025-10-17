@@ -39,7 +39,7 @@ public class ShopService {
 			} else {
 				List<Item> stock = shop.getStock();
 
-				shop.buyItem(bag, stock.get(choice));
+				shop.buyItem(bag, stock.get(choice - 1));
 			}
 
 		}
