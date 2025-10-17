@@ -34,7 +34,7 @@ public class Inventory {
 			return true;
 		}
 
-		System.out.print("Not enough gold!");
+		System.out.println("Not enough gold!");
 		return false;
 	}
 
