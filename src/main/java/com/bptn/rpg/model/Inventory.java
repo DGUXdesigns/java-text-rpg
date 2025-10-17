@@ -29,7 +29,7 @@ public class Inventory {
 	}
 
 	public boolean removeGold(int amount) {
-		if (amount >= gold) {
+		if (amount <= gold) {
 			gold -= amount;
 			return true;
 		}
