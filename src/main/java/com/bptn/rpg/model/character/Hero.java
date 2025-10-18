@@ -6,35 +6,18 @@ import com.bptn.rpg.model.item.Rarity;
 import com.bptn.rpg.model.item.Weapon;
 
 public class Hero extends Character {
-    private int experience;
-    private int maxHealth;
     private Weapon weapon;
     private final Inventory inventory;
 
-    public Hero(String name, int level, int health, int strength) {
-        super(name, level, health, strength);
-        this.maxHealth = health;
-        this.experience = 0;
+    public Hero(String name) {
+        super(name, 1, 0, 100, 100, 50);
         this.inventory = new Inventory();
-
-        // Give player starting weapon and equip it
-        Weapon woodenSword = new Weapon("Wooden Sword", Rarity.COMMON, 30, 5);
-        inventory.addItem(woodenSword);
-
-        this.weapon = woodenSword;
+        this.weapon = new Weapon("Wooden Sword", Rarity.COMMON, 30, 5);
     }
 
     // Getters
     public Weapon getWeapon() {
         return weapon;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
     }
 
     public Inventory getInventory() {
@@ -47,25 +30,9 @@ public class Hero extends Character {
         System.out.println(getName() + " equipped a " + weapon);
     }
 
-    public void gainExperience(int amount) {
-        experience += amount;
-        System.out.println(getName() + " gained " + amount + " experience points");
-
-        while (experience > (100 * getLevel())) {
-            levelUp();
-            setHealth(maxHealth);
-        }
-    }
-
-    public void increaseMaxHealth(int amount) {
-        maxHealth += amount;
-        System.out.println("HP: " + (maxHealth - amount) + " > " + maxHealth);
-    }
-
     public void levelUp() {
         super.levelUp();
-        System.out.println(getName() + " is now level " + getLevel() + "!");
-        increaseMaxHealth(25);
+        addMaxHealth(25);
         addStrength(5);
     }
 

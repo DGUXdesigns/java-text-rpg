@@ -6,74 +6,44 @@ import java.util.List;
 import com.bptn.rpg.model.item.Item;
 
 public class Inventory {
-	private int gold;
-	private List<Item> items;
+    private final List<Item> items;
 
-	public Inventory() {
-		this.items = new ArrayList<>();
-		this.gold = 50;
-	}
+    public Inventory() {
+        this.items = new ArrayList<>();
+    }
 
-	public int getGold() {
-		return gold;
-	}
+    public void addItem(Item item) {
+        items.add(item);
+        System.out.println(item.getName() + " added to inventory.");
+    }
 
-	public boolean addGold(int amount) {
-		if (amount > 0) {
-			gold += amount;
-			System.out.println(amount + " gold added to your inventory.");
-			return true;
-		}
+    public boolean removeItem(Item item) {
+        //TODO: implement into useItem method
+        boolean removed = items.remove(item);
 
-		return false;
-	}
+        if (removed) {
+            System.out.println(item.getName() + " removed from inventory");
+        }
 
-	public boolean removeGold(int amount) {
-		if (amount <= gold) {
-			gold -= amount;
-			return true;
-		}
+        return removed;
+    }
 
-		System.out.println("Not enough gold!");
-		return false;
-	}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
-	public void addItem(Item item) {
-		items.add(item);
-		System.out.println(item.getName() + " added to inventory.");
-	}
+        if (items.isEmpty()) {
+            sb.append("Inventory is empty.");
+        } else {
+            sb.append("--- Inventory ---\n");
+            int index = 1;
+            for (Item item : items) {
+                sb.append(index).append(". ").append(item.toString()).append("\n");
+                index++;
+            }
+        }
 
-	public boolean removeItem(Item item) {
-		boolean removed = items.remove(item);
-
-		if (removed) {
-			System.out.println(item.getName() + " removed from inventory");
-		}
-
-		return removed;
-	}
-
-	public List<Item> getItems() {
-		return items;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		if (items.isEmpty()) {
-			sb.append("Inventory is empty.");
-		} else {
-			sb.append("Gold: ").append(gold).append("\n");
-			sb.append("--- Inventory ---\n");
-			int index = 1;
-			for (Item item : items) {
-				sb.append(index).append(". ").append(item.toString()).append("\n");
-				index++;
-			}
-		}
-
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
 }

@@ -5,23 +5,11 @@ import com.bptn.rpg.model.item.Consumable;
 import java.util.Random;
 
 public class Enemy extends Character {
-    private final int experienceReward;
-    private final int goldReward;
     private final Random random = new Random();
 
 
-    public Enemy(String name, int health, int strength, int level, int experienceReward, int goldReward) {
-        super(name, level, health, strength);
-        this.experienceReward = experienceReward;
-        this.goldReward = goldReward;
-    }
-
-    public int getExperienceReward() {
-        return experienceReward;
-    }
-
-    public int getGoldReward() {
-        return goldReward;
+    public Enemy(String name, int maxHealth, int strength, int level, int experience, int gold) {
+        super(name, level, experience, gold, maxHealth, strength);
     }
 
     @Override
