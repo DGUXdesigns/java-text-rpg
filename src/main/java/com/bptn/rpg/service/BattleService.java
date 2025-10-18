@@ -109,7 +109,6 @@ public class BattleService {
         }
     }
 
-
     private void battleUI() {
         String message = """
                 What will you do?
@@ -158,12 +157,14 @@ public class BattleService {
             }
 
             if (choice < 0 || choice > consumables.size()) {
-                System.out.println("Invalid potion selection!");
+                System.out.println("Invalid selection!");
                 playerTurn();
                 return;
             }
 
-            hero.useItem((Consumable) consumables.get(choice - 1), hero);
+            Item selectedItem = consumables.get(choice - 1);
+            hero.useItem((Consumable) selectedItem, hero);
+            inventory.removeItem(selectedItem);
 
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a number");

@@ -13,10 +13,6 @@ public class Inventory {
         this.items = new ArrayList<>();
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
     public List<Item> getItemsByType(ItemType type) {
         return items.stream()
                 .filter(item -> item.getItemType() == type)
@@ -28,15 +24,12 @@ public class Inventory {
         System.out.println(item.getName() + " added to inventory.");
     }
 
-    public boolean removeItem(Item item) {
-        //TODO: implement into useItem method
+    public void removeItem(Item item) {
         boolean removed = items.remove(item);
 
         if (removed) {
             System.out.println(item.getName() + " removed from inventory");
         }
-
-        return removed;
     }
 
     @Override
