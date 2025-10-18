@@ -19,6 +19,17 @@ public class Inventory {
                 .toList();
     }
 
+    public int size() {
+        return items.size();
+    }
+
+    public Item getItem(int index) {
+        if (index >= 0 && index < items.size()) {
+            return items.get(index);
+        }
+        return null; // or throw an exception
+    }
+
     public void addItem(Item item) {
         items.add(item);
         System.out.println(item.getName() + " added to inventory.");
@@ -42,7 +53,7 @@ public class Inventory {
             sb.append("--- Inventory ---\n");
             int index = 1;
             for (Item item : items) {
-                sb.append(index).append(". ").append(item.toString()).append("\n");
+                sb.append(index).append(") ").append(item.toString()).append("\n");
                 index++;
             }
         }
