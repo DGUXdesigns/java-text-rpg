@@ -2,6 +2,7 @@ package com.bptn.rpg.model.character;
 
 import com.bptn.rpg.model.Inventory;
 import com.bptn.rpg.model.item.Consumable;
+import com.bptn.rpg.model.item.Item;
 import com.bptn.rpg.model.item.Rarity;
 import com.bptn.rpg.model.item.Weapon;
 
@@ -17,7 +18,7 @@ public class Hero extends Character {
     }
 
     // Getters
-    public Weapon getWeapon() {
+    public Item getWeapon() {
         return weapon;
     }
 
@@ -27,8 +28,9 @@ public class Hero extends Character {
 
     // Main methods
     public void equipWeapon(Weapon weapon) {
+        inventory.addItem(this.weapon);
+        inventory.removeItem(weapon);
         this.weapon = weapon;
-        System.out.println(getName() + " equipped a " + weapon);
     }
 
     public void levelUp() {
