@@ -17,6 +17,12 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+#IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
 #other
 .env
 .mvn/
