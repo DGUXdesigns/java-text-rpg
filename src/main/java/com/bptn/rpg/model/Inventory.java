@@ -4,12 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bptn.rpg.model.item.Item;
+import com.bptn.rpg.model.item.ItemType;
 
 public class Inventory {
     private final List<Item> items;
 
     public Inventory() {
         this.items = new ArrayList<>();
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public List<Item> getItemsByType(ItemType type) {
+        return items.stream()
+                .filter(item -> item.getItemType() == type)
+                .toList();
     }
 
     public void addItem(Item item) {

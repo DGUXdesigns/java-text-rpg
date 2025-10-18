@@ -1,9 +1,14 @@
 package com.bptn.rpg.service;
 
+import com.bptn.rpg.model.Inventory;
 import com.bptn.rpg.model.character.Enemy;
 import com.bptn.rpg.model.character.Hero;
+import com.bptn.rpg.model.item.Consumable;
+import com.bptn.rpg.model.item.Item;
+import com.bptn.rpg.model.item.ItemType;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -19,7 +24,10 @@ public class BattleService {
 
         // Initialize battle
         System.out.println("\n A " + enemy.getName() + " appears!");
-        System.out.println("⚔️Battle start!\n");
+        System.out.println("""
+                ⚔️Battle start!
+                ===============
+                """);
 
         boolean isHeroTurn = true;
 
@@ -35,20 +43,32 @@ public class BattleService {
             isHeroTurn = !isHeroTurn;
         }
 
-        endBattle();
+        if (hero.getIsFleeing()) {
+            hero.setIsFleeing(false);
+        } else {
+            endBattle();
+        }
     }
 
     private void playerTurn() {
-        int command = -1;
+        if (hero.getIsFleeing()) {
+            hero.setIsFleeing(false);
+        }
 
-        while (command < 1 || command > 4) {
+        if (hero.isDefending()) {
+            hero.setDefending(false);
+        }
+
+        int choice = -1;
+
+        while (choice < 1 || choice > 4) {
             battleUI();
 
             try {
-                command = scanner.nextInt();
-                scanner.hasNextLine(); // Consume leftover newline
+                choice = scanner.nextInt();
+                scanner.hasNextLine();
 
-                switch (command) {
+                switch (choice) {
                     case 1:
                         hero.attack(enemy);
                         break;
@@ -56,10 +76,14 @@ public class BattleService {
                         hero.defend();
                         break;
                     case 3:
-                        System.out.println("Feature still in the works");
+                        // Display inventory and handle item usage
+                        handleInventory();
                         break;
                     case 4:
-                        hero.flee();
+                        if (hero.flee()) {
+                            // End battle loop by setting enemy health to 0
+                            enemy.setHealth(0);
+                        }
                         break;
                     default:
                         System.out.println("Invalid Option. Please enter a number between 1 and 4");
@@ -74,6 +98,10 @@ public class BattleService {
 
     private void enemyTurn() {
         // AI logic for enemy actions
+        if (enemy.isDefending()) {
+            enemy.setDefending(false);
+        }
+
         if (enemy.getHealth() < 50 && random.nextInt(100) < 30) {
             enemy.defend();
         } else {
@@ -91,20 +119,70 @@ public class BattleService {
                  4) Flee
                 """;
 
-        System.out.print(hero.getName() + " HP: " + hero.getMaxHealth() + "/" + hero.getHealth());
-        System.out.println(" | " + enemy.getName() + " HP: " + enemy.getHealth());
+        System.out.print(hero.getName() + " HP: " + hero.getHealth() + "/" + hero.getMaxHealth());
+        System.out.println(" | " + enemy.getName() + " HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
         System.out.println(message);
     }
 
+    private void handleInventory() {
+        Inventory inventory = hero.getInventory();
+        List<Item> consumables = inventory.getItemsByType(ItemType.CONSUMABLE);
+
+        if (consumables.isEmpty()) {
+            System.out.println("No potions in you inventory!");
+            playerTurn();
+            return;
+        }
+
+        // Display items
+        StringBuilder sb = new StringBuilder();
+        sb.append("--- Items ---\n");
+
+        int index = 1;
+
+        for (Item item : consumables) {
+            sb.append(index++).append(") ").append(item.getName()).append("\n");
+        }
+
+        sb.append("0) Back");
+        System.out.println(sb);
+
+        // Manage player choice
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice == 0) {
+                playerTurn();
+                return;
+            }
+
+            if (choice < 0 || choice > consumables.size()) {
+                System.out.println("Invalid potion selection!");
+                playerTurn();
+                return;
+            }
+
+            hero.useItem((Consumable) consumables.get(choice - 1), hero);
+
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number");
+            scanner.nextLine();
+            playerTurn();
+        }
+
+
+    }
+
     private void endBattle() {
-        if (hero.isAlive()) {
-            System.out.println(hero.getName() + " defeated " + enemy.getName() + "!");
-            hero.gainExperience(enemy.getExperienceReward());
-            hero.getInventory().addGold(enemy.getGoldReward());
-        } else {
+        if (!hero.isAlive()) {
             System.out.println("\n " + hero.getName() + " was defeated...");
             System.out.println("💀 GAME OVER 💀");
             System.exit(0);
+        } else if (enemy.getHealth() == 0) {
+            System.out.println(hero.getName() + " defeated " + enemy.getName() + "!");
+            hero.gainExperience(enemy.getExperience());
+            hero.addGold(enemy.getGold());
         }
     }
 }
