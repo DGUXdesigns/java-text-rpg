@@ -65,13 +65,14 @@ public class Hero extends Character {
 
     @Override
     public void useItem(Consumable item, Character target) {
+        int previousHp = getHealth();
         // Calculate amount to be healed
         int healAmount = target.getHealth() + item.getPotency();
         int health = Math.min(healAmount, getMaxHealth()); // Ensure health doesn't exceed max health.
 
         // Apply new health to hero
         setHealth(health);
-        System.out.println(getName() + " recovered " + item.getPotency() + " using a " + item.getName());
+        System.out.println(getName() + " recovered " + (getHealth() - previousHp) + " health using a " + item.getName());
     }
 
     @Override
