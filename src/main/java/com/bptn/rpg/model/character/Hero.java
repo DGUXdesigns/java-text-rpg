@@ -8,6 +8,7 @@ import com.bptn.rpg.model.item.Weapon;
 public class Hero extends Character {
     private Weapon weapon;
     private final Inventory inventory;
+    private boolean isFleeing = false;
 
     public Hero(String name) {
         super(name, 1, 0, 100, 100, 50);
@@ -34,6 +35,14 @@ public class Hero extends Character {
         super.levelUp();
         addMaxHealth(25);
         addStrength(5);
+    }
+
+    public boolean getIsFleeing() {
+        return isFleeing;
+    }
+
+    public void setIsFleeing(boolean isFleeing) {
+        this.isFleeing = isFleeing;
     }
 
     @Override
@@ -71,6 +80,7 @@ public class Hero extends Character {
         // 50% chance to escape
         if (fleeChance > 0.5) {
             System.out.println(getName() + " successfully fled the battle!");
+            setIsFleeing(true);
             return true;
         } else {
             System.out.println(getName() + " tried to flee but couldn't get away!");
