@@ -26,7 +26,7 @@ public class InventoryMenu {
         while (isOpen) {
             System.out.println("Total Items: " + inventory.size());
             System.out.println(inventory);
-            System.out.println("0) Exit");
+            System.out.println("\n 0) Exit");
 
             if (!scanner.hasNextInt()) {
                 System.out.println("Please enter a number.");

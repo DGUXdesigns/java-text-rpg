@@ -13,6 +13,10 @@ public class Inventory {
         this.items = new ArrayList<>();
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public List<Item> getItemsByType(ItemType type) {
         return items.stream()
                 .filter(item -> item.getItemType() == type)
@@ -46,14 +50,14 @@ public class Inventory {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("--- Inventory ---\n");
 
         if (items.isEmpty()) {
             sb.append("Inventory is empty.");
         } else {
-            sb.append("--- Inventory ---\n");
             int index = 1;
             for (Item item : items) {
-                sb.append(index).append(") ").append(item.toString()).append("\n");
+                sb.append(" ").append(index).append(") ").append(item.toString()).append("\n");
                 index++;
             }
         }
