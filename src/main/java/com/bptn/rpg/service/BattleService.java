@@ -2,7 +2,6 @@ package com.bptn.rpg.service;
 
 import com.bptn.rpg.model.Inventory;
 import com.bptn.rpg.model.character.Enemy;
-import com.bptn.rpg.model.character.FinalBoss;
 import com.bptn.rpg.model.character.Hero;
 import com.bptn.rpg.model.item.Consumable;
 import com.bptn.rpg.model.item.Item;
@@ -19,56 +18,39 @@ public class BattleService {
     private Hero hero;
     private Enemy enemy;
 
-    public void startFinalBattle(Hero hero) {
-        this.hero = hero;
-        this.enemy = new FinalBoss();
-
-        System.out.println("\n🔥 A fearsome " + enemy.getName() + " descends from the sky! 🔥");
-        System.out.println("""
-                ⚔️ FINAL BOSS BATTLE START! ⚔️
-                ==============================
-                """);
-
-        boolean isHeroTurn = true;
-
-        while (hero.isAlive() && enemy.isAlive()) {
-            if (isHeroTurn) {
-                System.out.println("\n" + hero.getName() + "'s turn");
-                playerTurn();
-            } else {
-                System.out.println("\n" + enemy.getName() + "'s turn");
-                enemyTurn(); // BlackDragon has its own attack logic
-            }
-
-            isHeroTurn = !isHeroTurn;
-        }
-
-        if (hero.getIsFleeing()) {
-            hero.setIsFleeing(false);
-        } else {
-            endBossBattle();
-        }
-    }
-
-    public void startBattle(Hero hero, Enemy enemy) {
+    public void startBattle(Hero hero, Enemy enemy, boolean isFinalBattle) {
         this.hero = hero;
         this.enemy = enemy;
 
-        // Initialize battle
-        System.out.println("\n A " + enemy.getName() + " appears!");
-        System.out.println("""
-                ⚔️Battle start!
-                ===============
-                """);
+        if (isFinalBattle) {
+            System.out.println("""
+                    
+                    ==============================
+                    ⚔️ FINAL BOSS BATTLE START! ⚔️
+                    ==============================""");
+            System.out.println("\n🔥 A fearsome " + enemy.getName() + " descends from the sky! 🔥\n");
+
+        } else {
+            System.out.println("""
+                    
+                    ===================
+                    ⚔️ Battle start! ⚔️
+                    ===================""");
+            System.out.println("A " + enemy.getName() + " appears!\n");
+
+        }
 
         boolean isHeroTurn = true;
 
+
         while (hero.isAlive() && enemy.isAlive()) {
+            String name = isHeroTurn ? hero.getName() : enemy.getName();
+
+            System.out.println(name + "'s turn\n");
+
             if (isHeroTurn) {
-                System.out.println(hero.getName() + "'s turn");
                 playerTurn();
             } else {
-                System.out.println(enemy.getName() + "'s turn");
                 enemyTurn();
             }
 
