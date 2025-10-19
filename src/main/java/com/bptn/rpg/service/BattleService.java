@@ -131,17 +131,15 @@ public class BattleService {
     }
 
     private void battleUI() {
-        String message = """
+        System.out.print(hero.getName() + "'s HP: " + hero.getHealth() + "/" + hero.getMaxHealth());
+        System.out.println(" | " + enemy.getName() + "'s HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
+        System.out.println("""
                 What will you do?
                  1) Attack
                  2) Defend
                  3) Inventory
                  4) Flee
-                """;
-
-        System.out.print(hero.getName() + " HP: " + hero.getHealth() + "/" + hero.getMaxHealth());
-        System.out.println(" | " + enemy.getName() + " HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
-        System.out.println(message);
+                """);
     }
 
     private void handleInventory() {
