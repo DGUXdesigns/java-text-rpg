@@ -13,10 +13,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class BattleService {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
     private final Random random = new Random();
     private Hero hero;
     private Enemy enemy;
+
+    public BattleService(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public void startBattle(Hero hero, Enemy enemy, boolean isFinalBattle) {
         this.hero = hero;
@@ -73,36 +77,38 @@ public class BattleService {
             hero.setDefending(false);
         }
 
-        int choice = -1;
+        boolean actionTaken = false;
 
-        while (choice < 1 || choice > 4) {
+        while (!actionTaken) {
             battleUI();
+            int choice = -1;
 
             try {
                 choice = scanner.nextInt();
                 scanner.hasNextLine();
 
                 switch (choice) {
-                    case 1:
+                    case 1 -> {
                         hero.attack(enemy);
-                        break;
-                    case 2:
+                        actionTaken = true;
+                    }
+                    case 2 -> {
                         hero.defend();
-                        break;
-                    case 3:
-                        // Display inventory and handle item usage
+                        actionTaken = true;
+                    }
+                    case 3 -> {
                         handleInventory();
-                        break;
-                    case 4:
+                        actionTaken = true;
+                    }
+                    case 4 -> {
                         if (hero.flee()) {
                             // End battle loop by setting enemy health to 0
                             enemy.setHealth(0);
                         }
-                        break;
-                    default:
-                        System.out.println("Invalid Option. Please enter a number between 1 and 4");
+                        actionTaken = true;
+                    }
+                    default -> System.out.println("Invalid Option. Please enter a number between 1 and 4");
                 }
-
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine();
