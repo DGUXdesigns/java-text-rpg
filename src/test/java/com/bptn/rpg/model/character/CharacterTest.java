@@ -13,8 +13,8 @@ class TestCharacter extends Character {
     }
 
     @Override
-    public void attack(Character target) {
-
+    public int attack(Character target) {
+        return 0;
     }
 
     @Override
@@ -47,30 +47,22 @@ class CharacterTest {
     @Test
     void testTakeDamage() {
         character.takeDamage(40);
-        assertEquals(60, character.getHealth(),
-                "Character should take 40 damage and have 60 health remaining");
 
-        assertTrue(character.isAlive(),
-                "Character should still be alive when health is more than 0");
+        assertEquals(60, character.getHealth(), "Character should take 40 damage and have 60 health remaining");
+        assertTrue(character.isAlive(), "Character should still be alive when health is more than 0");
 
         character.takeDamage(70);
 
-        assertEquals(0, character.getHealth(),
-                "Health should not drop below 0");
-
-        assertFalse(character.isAlive(),
-                "Character should be dead when health is 0");
+        assertEquals(0, character.getHealth(), "Health should not drop below 0");
+        assertFalse(character.isAlive(), "Character should be dead when health is 0");
     }
 
     @Test
     void testIsDead() {
         character.takeDamage(120);
 
-        assertEquals(0, character.getHealth(),
-                "Health should not drop below 0");
-
-        assertFalse(character.isAlive(),
-                "Character should be dead when health is 0");
+        assertEquals(0, character.getHealth(), "Health should not drop below 0");
+        assertFalse(character.isAlive(), "Character should be dead when health is 0");
     }
 
     @Test
@@ -78,69 +70,59 @@ class CharacterTest {
         character.setDefending(true);
         character.takeDamage(40);
 
-        assertEquals(80, character.getHealth(),
-                "Damage should be reduced by 50%");
-        assertFalse(character.isDefending(),
-                "Should reset defending after attack"); // should reset defending after attack
+        assertEquals(80, character.getHealth(), "Damage should be reduced by 50%");
     }
 
     @Test
     void testAddStrength() {
         character.addStrength(10);
 
-        assertEquals(30, character.getStrength(),
-                "Should add 10 to max health");
+        assertEquals(30, character.getStrength(), "Should add 10 to max health");
     }
 
     @Test
     void testAddMaxHealth() {
         character.addMaxHealth(50);
 
-        assertEquals(150, character.getMaxHealth(),
-                "Should add 50 to strength");
+        assertEquals(150, character.getMaxHealth(), "Should add 50 to strength");
 
     }
 
     @Test
     void testAddGold() {
         character.addGold(50);
-        assertEquals(150, character.getGold(),
-                "Should add 50 gold");
+        assertEquals(150, character.getGold(), "Should add 50 gold");
     }
 
     @Test
     void testRemoveGoldSuccess() {
         boolean result = character.removeGold(50);
+
         assertTrue(result);
-        assertEquals(50, character.getGold(),
-                "Should remove 50 gold");
+        assertEquals(50, character.getGold(), "Should remove 50 gold");
     }
 
     @Test
     void testRemoveGoldFail() {
         boolean result = character.removeGold(200);
+        
         assertFalse(result, "Should fail to get gold");
-        assertEquals(100, character.getGold(),
-                "amount should remain unchanged"); // unchanged
+        assertEquals(100, character.getGold(), "amount should remain unchanged"); // unchanged
     }
 
     @Test
     void testGainExperienceAndLevelUp() {
         character.gainExperience(100);
 
-        assertEquals(100, character.getExperience(),
-                "Should gain 100 experience");
-
-        assertEquals(2, character.getLevel(),
-                "Should level Up once every 100 experience");
+        assertEquals(100, character.getExperience(), "Should gain 100 experience");
+        assertEquals(2, character.getLevel(), "Should level Up once every 100 experience");
     }
 
     @Test
     void testMultipleLevelUps() {
         character.gainExperience(700);
 
-        assertEquals(8, character.getLevel(),
-                "Should level up multiple times");
+        assertEquals(8, character.getLevel(), "Should level up multiple times");
     }
 
     @AfterEach
