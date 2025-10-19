@@ -6,23 +6,24 @@ public class InputUtil {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    /**
-     * Reusable method to get a valid integer from the user.
-     *
-     * @param prompt the message displayed to the user
-     * @return a valid integer input from the user
-     */
     public static int getInt(String prompt) {
-        System.out.println(prompt);
+        int value;
 
-        while (!scanner.hasNextInt()) {
-            System.out.println("Please enter a number.");
-            scanner.next(); // consume the invalid input
-            System.out.print(prompt); // prompt again
+        while (true) {
+            System.out.println(prompt);
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.println("Please enter an option:");
+                continue;
+            }
+
+            try {
+                value = Integer.parseInt(input);
+                return value;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number:");
+            }
         }
-
-        int value = scanner.nextInt();
-        scanner.nextLine(); // consume the remaining newline
-        return value;
     }
 }
