@@ -1,11 +1,14 @@
 package com.bptn.rpg.service;
 
 import com.bptn.rpg.model.Inventory;
+import com.bptn.rpg.model.character.Character;
 import com.bptn.rpg.model.character.Enemy;
 import com.bptn.rpg.model.character.Hero;
 import com.bptn.rpg.model.item.Consumable;
 import com.bptn.rpg.model.item.Item;
 import com.bptn.rpg.model.item.ItemType;
+import com.bptn.rpg.utils.InputUtil;
+import com.bptn.rpg.utils.Messages;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -37,9 +40,9 @@ public class BattleService {
         } else {
             System.out.println("""
                     
-                    ===================
-                    ⚔️ Battle start! ⚔️
-                    ===================""");
+                    =========================
+                       ⚔️ Battle start! ⚔️
+                    =========================""");
             System.out.println("A " + enemy.getName() + " appears!\n");
 
         }
@@ -48,9 +51,9 @@ public class BattleService {
 
 
         while (hero.isAlive() && enemy.isAlive()) {
-            String name = isHeroTurn ? hero.getName() : enemy.getName();
+            Character activeChar = isHeroTurn ? hero : enemy;
 
-            System.out.println(name + "'s turn\n");
+            Messages.turnStart(activeChar);
 
             if (isHeroTurn) {
                 playerTurn();
@@ -81,19 +84,19 @@ public class BattleService {
 
         while (!actionTaken) {
             battleUI();
-            int choice = -1;
 
             try {
-                choice = scanner.nextInt();
-                scanner.hasNextLine();
+                int choice = InputUtil.getInt("What's Your move: ");
 
                 switch (choice) {
                     case 1 -> {
-                        hero.attack(enemy);
+                        int damage = hero.attack(enemy);
+                        Messages.attack(hero, enemy, damage, enemy.isDefending());
                         actionTaken = true;
                     }
                     case 2 -> {
                         hero.defend();
+                        Messages.defend(hero);
                         actionTaken = true;
                     }
                     case 3 -> {
@@ -104,13 +107,16 @@ public class BattleService {
                         }
                     }
                     case 4 -> {
-                        if (hero.flee()) {
-                            // End battle loop by setting enemy health to 0
+                        hero.flee();
+                        Messages.flee(hero);
+
+                        if (hero.getIsFleeing()) {
                             enemy.setHealth(0);
                         }
+
                         actionTaken = true;
                     }
-                    default -> System.out.println("Invalid Option. Please enter a number between 1 and 4");
+                    default -> Messages.invalidOption();
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
@@ -128,8 +134,11 @@ public class BattleService {
 
         if (threshold && random.nextInt(100) < 30) {
             enemy.defend();
+            Messages.defend(enemy);
         } else {
-            enemy.attack(hero);
+            int damage = enemy.attack(hero);
+            Messages.attack(enemy, hero, damage, hero.isDefending());
+
         }
     }
 
@@ -137,7 +146,7 @@ public class BattleService {
         System.out.print(hero.getName() + "'s HP: " + hero.getHealth() + "/" + hero.getMaxHealth());
         System.out.println(" | " + enemy.getName() + "'s HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
         System.out.println("""
-                What will you do?
+                --- Battle Menu ---
                  1) Attack
                  2) Defend
                  3) Inventory
@@ -176,7 +185,7 @@ public class BattleService {
             }
 
             if (choice < 0 || choice > consumables.size()) {
-                System.out.println("Invalid selection!");
+                Messages.invalidOption();
                 return false;
             }
 
@@ -186,7 +195,7 @@ public class BattleService {
             return true;
 
         } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter a number");
+            Messages.invalidInput();
             scanner.nextLine();
             playerTurn();
         }
@@ -196,19 +205,18 @@ public class BattleService {
 
     private void endBattle(boolean isFinalBattle) {
         if (isFinalBattle && enemy.getHealth() == 0) {
-            System.out.println("🏆 You are victorious! You've slain the Dragon, Congrats on Beating the game 🏆");
-            System.out.println("Thanks For Playing!");
+            Messages.victory();
             System.exit(0);
         }
 
         if (!hero.isAlive()) {
-            System.out.println("\n " + hero.getName() + " was defeated...");
-            System.out.println("💀 GAME OVER 💀");
+            Messages.defeated(hero);
             System.exit(0);
         } else if (enemy.getHealth() == 0) {
-            System.out.println(hero.getName() + " defeated " + enemy.getName() + "!");
             hero.gainExperience(enemy.getExperience());
+            System.out.println(hero.getExperience());
             hero.addGold(enemy.getGold());
+            Messages.enemyDefeated(hero, enemy);
         }
     }
 }

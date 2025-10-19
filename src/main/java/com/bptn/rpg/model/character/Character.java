@@ -1,5 +1,7 @@
 package com.bptn.rpg.model.character;
 
+import com.bptn.rpg.model.item.Consumable;
+
 public abstract class Character implements Commands {
     private final String name;
     private int level;
@@ -9,6 +11,7 @@ public abstract class Character implements Commands {
     private int health;
     private int strength;
     private boolean defending;
+    private boolean isFleeing = false;
 
     public Character(String name, int level, int experience, int gold, int maxHealth, int strength) {
         this.name = name;
@@ -34,9 +37,16 @@ public abstract class Character implements Commands {
         return experience;
     }
 
+    public boolean getIsFleeing() {
+        return isFleeing;
+    }
+
+    public void setIsFleeing(boolean isFleeing) {
+        this.isFleeing = isFleeing;
+    }
+
     public void gainExperience(int amount) {
         experience += amount;
-        System.out.println(getName() + " gained " + amount + " experience points");
 
         int previousLevel = getLevel();
         int previousMaxHp = getMaxHealth();
@@ -61,7 +71,6 @@ public abstract class Character implements Commands {
     public void addGold(int amount) {
         if (amount > 0) {
             gold += amount;
-            System.out.println(amount + " gold added to your inventory.\n");
         }
 
     }
@@ -117,14 +126,39 @@ public abstract class Character implements Commands {
         return health > 0;
     }
 
-    public void takeDamage(int damage) {
-        // Handles damage if unit is defending
+    public int takeDamage(int damage) {
         if (defending) {
-            damage /= 2; // reduces damage by 50%
-            System.out.println(name + " was defending and reduced the damage to " + damage + "!");
-            defending = false;
+            damage /= 2;
         }
 
         setHealth(Math.max(0, health - damage));
+        return damage;
+    }
+
+    @Override
+    public void defend() {
+        setDefending(true);
+    }
+
+    @Override
+    public void useItem(Consumable item, Character target) {
+        int previousHp = getHealth();
+        int healAmount = target.getHealth() + item.getPotency();
+        int health = Math.min(healAmount, getMaxHealth());
+
+        setHealth(health);
+        System.out.println(getName() + " recovered " + (getHealth() - previousHp) + " health using a " + item.getName());
+    }
+
+    @Override
+    public boolean flee() {
+        double fleeChance = Math.random();
+
+        if (fleeChance > 0.5) {
+            setIsFleeing(true);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
