@@ -64,7 +64,7 @@ public class BattleService {
         if (hero.getIsFleeing()) {
             hero.setIsFleeing(false);
         } else {
-            endBattle();
+            endBattle(isFinalBattle);
         }
     }
 
@@ -194,7 +194,13 @@ public class BattleService {
         return false;
     }
 
-    private void endBattle() {
+    private void endBattle(boolean isFinalBattle) {
+        if (isFinalBattle && enemy.getHealth() == 0) {
+            System.out.println("🏆 You are victorious! You've slain the Dragon, Congrats on Beating the game 🏆");
+            System.out.println("Thanks For Playing!");
+            System.exit(0);
+        }
+
         if (!hero.isAlive()) {
             System.out.println("\n " + hero.getName() + " was defeated...");
             System.out.println("💀 GAME OVER 💀");
@@ -203,21 +209,6 @@ public class BattleService {
             System.out.println(hero.getName() + " defeated " + enemy.getName() + "!");
             hero.gainExperience(enemy.getExperience());
             hero.addGold(enemy.getGold());
-        }
-    }
-
-    private void endBossBattle() {
-        if (!hero.isAlive()) {
-            System.out.println("\n" + hero.getName() + " was slain by the " + enemy.getName() + "...");
-            System.out.println("💀 GAME OVER 💀");
-            System.exit(0);
-        } else if (enemy.getHealth() == 0) {
-            System.out.println("\n🎉 " + hero.getName() + " has defeated the " + enemy.getName() + "! 🎉");
-            hero.gainExperience(enemy.getExperience());
-            hero.addGold(enemy.getGold());
-            System.out.println("🏆 You are victorious! You've slain the Dragon, Congrats on Beating the game 🏆");
-            System.out.println("Thanks For Playing!");
-            System.exit(0);
         }
     }
 }
