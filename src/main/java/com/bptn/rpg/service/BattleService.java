@@ -117,12 +117,13 @@ public class BattleService {
     }
 
     private void enemyTurn() {
-        // AI logic for enemy actions
         if (enemy.isDefending()) {
             enemy.setDefending(false);
         }
 
-        if (enemy.getHealth() < 50 && random.nextInt(100) < 30) {
+        boolean threshold = enemy.getHealth() <= (enemy.getMaxHealth() * 0.75);
+
+        if (threshold && random.nextInt(100) < 30) {
             enemy.defend();
         } else {
             enemy.attack(hero);
