@@ -66,7 +66,7 @@ public class App {
                     }
                     case "Slay The Dragon" -> {
                         // TODO: Implement Dragon boss
-                        System.out.println("🔥 Feature in the works... 🔥");
+                        battle.startFinalBattle(hero);
                     }
                     default -> System.out.println("Invalid choice, try again.");
                 }
