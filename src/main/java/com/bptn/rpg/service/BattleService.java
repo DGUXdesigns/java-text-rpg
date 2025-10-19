@@ -97,8 +97,11 @@ public class BattleService {
                         actionTaken = true;
                     }
                     case 3 -> {
-                        handleInventory();
-                        actionTaken = true;
+                        boolean usedItem = handleInventory();
+
+                        if (usedItem) {
+                            actionTaken = true;
+                        }
                     }
                     case 4 -> {
                         if (hero.flee()) {
@@ -142,27 +145,25 @@ public class BattleService {
                 """);
     }
 
-    private void handleInventory() {
+    private boolean handleInventory() {
         Inventory inventory = hero.getInventory();
         List<Item> consumables = inventory.getItemsByType(ItemType.CONSUMABLE);
 
         if (consumables.isEmpty()) {
             System.out.println("No potions in you inventory!");
-            playerTurn();
-            return;
+            return false;
         }
 
         // Display items
+        System.out.println("--- Items ---");
         StringBuilder sb = new StringBuilder();
-        sb.append("--- Items ---\n");
 
         int index = 1;
 
         for (Item item : consumables) {
-            sb.append(index++).append(") ").append(item.getName()).append("\n");
+            sb.append(" ").append(index++).append(") ").append(item.getName()).append("\n");
         }
-
-        sb.append("0) Back");
+        sb.append(" 0) Back");
         System.out.println(sb);
 
         // Manage player choice
@@ -171,19 +172,18 @@ public class BattleService {
             scanner.nextLine();
 
             if (choice == 0) {
-                playerTurn();
-                return;
+                return false;
             }
 
             if (choice < 0 || choice > consumables.size()) {
                 System.out.println("Invalid selection!");
-                playerTurn();
-                return;
+                return false;
             }
 
             Item selectedItem = consumables.get(choice - 1);
             hero.useItem((Consumable) selectedItem, hero);
             inventory.removeItem(selectedItem);
+            return true;
 
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a number");
@@ -191,7 +191,7 @@ public class BattleService {
             playerTurn();
         }
 
-
+        return false;
     }
 
     private void endBattle() {
