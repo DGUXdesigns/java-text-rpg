@@ -1,7 +1,5 @@
 package com.bptn.rpg.model.character;
 
-import com.bptn.rpg.model.item.Consumable;
-
 import java.util.Random;
 
 public class Enemy extends Character {

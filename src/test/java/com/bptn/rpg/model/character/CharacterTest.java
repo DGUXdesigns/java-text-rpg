@@ -28,11 +28,9 @@ class TestCharacter extends Character {
     }
 
     @Override
-    public boolean flee() {
-        return false;
-    }
+    public void flee() {
 
-    // Empty implementations for interface methods (if any)
+    }
 }
 
 class CharacterTest {
@@ -105,7 +103,7 @@ class CharacterTest {
     @Test
     void testRemoveGoldFail() {
         boolean result = character.removeGold(200);
-        
+
         assertFalse(result, "Should fail to get gold");
         assertEquals(100, character.getGold(), "amount should remain unchanged"); // unchanged
     }

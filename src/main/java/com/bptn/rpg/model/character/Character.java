@@ -151,14 +151,11 @@ public abstract class Character implements Commands {
     }
 
     @Override
-    public boolean flee() {
+    public void flee() {
         double fleeChance = Math.random();
 
         if (fleeChance > 0.5) {
             setIsFleeing(true);
-            return true;
-        } else {
-            return false;
         }
     }
 }
