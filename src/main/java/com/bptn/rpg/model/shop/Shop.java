@@ -3,7 +3,7 @@ package com.bptn.rpg.model.shop;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bptn.rpg.model.Inventory;
+import com.bptn.rpg.model.character.Hero;
 import com.bptn.rpg.model.item.Consumable;
 import com.bptn.rpg.model.item.Item;
 import com.bptn.rpg.model.item.ItemType;
@@ -11,62 +11,58 @@ import com.bptn.rpg.model.item.Rarity;
 import com.bptn.rpg.model.item.Weapon;
 
 public class Shop {
-	private String name;
-	private List<Item> stock;
+    private final String name;
+    private final List<Item> stock;
 
-	public Shop(String name) {
-		this.name = name;
-		this.stock = new ArrayList<>();
-		initializeStock();
-	}
+    public Shop(String name) {
+        this.name = name;
+        this.stock = new ArrayList<>();
+        initializeStock();
+    }
 
-	private void initializeStock() {
-		stock.add(new Weapon("Copper Sword", Rarity.COMMON, 50, 10));
-		stock.add(new Weapon("Iron Sword", Rarity.UNCOMMON, 100, 13));
-		stock.add(new Weapon("Silver Axe", Rarity.RARE, 200, 18));
-		stock.add(new Weapon("Knight's Blade", Rarity.EPIC, 350, 25));
-		stock.add(new Weapon("Dragon Slayer", Rarity.LEGENDARY, 500, 40));
-		stock.add(new Consumable("Potion", Rarity.COMMON, 25, 100));
-		stock.add(new Consumable("Hi-Potion", Rarity.UNCOMMON, 75, 250));
-	}
+    private void initializeStock() {
+        stock.add(new Weapon("Copper Sword", Rarity.COMMON, 50, 10));
+        stock.add(new Weapon("Iron Sword", Rarity.UNCOMMON, 100, 13));
+        stock.add(new Weapon("Silver Axe", Rarity.RARE, 200, 18));
+        stock.add(new Weapon("Knight's Blade", Rarity.EPIC, 350, 25));
+        stock.add(new Weapon("Dragon Slayer", Rarity.LEGENDARY, 500, 40));
+        stock.add(new Consumable("Potion", Rarity.COMMON, 25, 100));
+        stock.add(new Consumable("Hi-Potion", Rarity.UNCOMMON, 75, 250));
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<Item> getStock() {
-		return stock;
-	}
+    public List<Item> getStock() {
+        return stock;
+    }
 
-	public boolean buyItem(Inventory inventory, Item item) {
-		// Check if hero has enough gold
-		boolean success = inventory.removeGold(item.getPrice());
+    public void buyItem(Hero hero, Item item) {
+        boolean success = hero.removeGold(item.getPrice());
 
-		if (success) {
-			inventory.addItem(item);
+        if (success) {
+            hero.getInventory().addItem(item);
 
-			if (item.getItemType().equals(ItemType.WEAPON)) {
-				stock.remove(item); // Remove Weapon from the shop
-			}
+            if (item.getItemType().equals(ItemType.WEAPON)) {
+                stock.remove(item); // Remove Weapon from the shop
+            }
 
-			System.out.println("Purchased " + item.getName() + " for " + item.getPrice() + " gold");
-			return success;
-		}
+            System.out.println("Purchased " + item.getName() + " for " + item.getPrice() + " gold");
+        }
+    }
 
-		return success;
-	}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        int index = 1;
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		int index = 1;
+        for (Item item : stock) {
+            sb.append(index++).append(". ").append(item.getItemType()).append(": ").append(item)
+                    .append(" | Price: ").append(item.getPrice()).append(" Gold\n");
+        }
 
-		for (Item item : stock) {
-			sb.append(index++).append(". ").append(item.getItemType()).append(": ").append(item.toString())
-					.append(" | Price: ").append(item.getPrice()).append(" Gold\n");
-		}
-
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
 }
