@@ -2,23 +2,23 @@ package com.bptn.rpg.model.character;
 
 import com.bptn.rpg.model.Inventory;
 import com.bptn.rpg.model.item.Consumable;
-import com.bptn.rpg.model.item.Item;
 import com.bptn.rpg.model.item.Rarity;
 import com.bptn.rpg.model.item.Weapon;
+
+import java.util.Random;
 
 public class Hero extends Character {
     private Weapon weapon;
     private final Inventory inventory;
     private boolean isFleeing = false;
 
-    public Hero(String name) {
-        super(name, 1, 0, 100, 100, 50);
+    public Hero(String name, int gold) {
+        super(name, 1, 0, gold, 120, 10);
         this.inventory = new Inventory();
-        this.weapon = new Weapon("Wooden Sword", Rarity.COMMON, 30, 5);
+        this.weapon = new Weapon("Wooden Sword", Rarity.COMMON, 30, 6);
     }
 
-    // Getters
-    public Item getWeapon() {
+    public Weapon getWeapon() {
         return weapon;
     }
 
@@ -26,7 +26,6 @@ public class Hero extends Character {
         return inventory;
     }
 
-    // Main methods
     public void equipWeapon(Weapon weapon) {
         inventory.addItem(this.weapon);
         inventory.removeItem(weapon);
@@ -49,14 +48,23 @@ public class Hero extends Character {
 
     @Override
     public void attack(Character target) {
+        Random random = new Random();
+
         // Calculate total damage
-        int attackPower = weapon.getDamage() + getStrength();
-        int levelBonus = (int) (attackPower * (0.1 * getLevel()));
-        int totalDamage = attackPower + levelBonus;
+        int baseDamage = weapon.getDamage() + getStrength();
+
+        // Damage multiplier
+        double variability = 0.85 + (0.3 * random.nextDouble());
+        int damage = (int) (baseDamage * variability);
+
+        // Level scaling Bonus
+        int levelBonus = (int) (getLevel() * 1.5);
+
+        damage += levelBonus;
 
         // apply damage to enemy
-        System.out.println(getName() + " dealt " + totalDamage + " damage!");
-        target.takeDamage(totalDamage);
+        System.out.println(getName() + " dealt " + damage + " damage!");
+        target.takeDamage(damage);
     }
 
     @Override
@@ -68,11 +76,9 @@ public class Hero extends Character {
     @Override
     public void useItem(Consumable item, Character target) {
         int previousHp = getHealth();
-        // Calculate amount to be healed
         int healAmount = target.getHealth() + item.getPotency();
-        int health = Math.min(healAmount, getMaxHealth()); // Ensure health doesn't exceed max health.
+        int health = Math.min(healAmount, getMaxHealth());
 
-        // Apply new health to hero
         setHealth(health);
         System.out.println(getName() + " recovered " + (getHealth() - previousHp) + " health using a " + item.getName());
     }
@@ -80,7 +86,7 @@ public class Hero extends Character {
     @Override
     public boolean flee() {
         double fleeChance = Math.random();
-        // 50% chance to escape
+
         if (fleeChance > 0.5) {
             System.out.println(getName() + " successfully fled the battle!");
             setIsFleeing(true);
