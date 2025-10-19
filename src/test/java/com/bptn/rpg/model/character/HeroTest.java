@@ -17,7 +17,7 @@ class HeroTest {
 
     @BeforeEach
     void setUp() {
-        hero = new Hero("Arthur");
+        hero = new Hero("Arthur", 50);
         ironSword = new Weapon("Iron Sword", Rarity.UNCOMMON, 80, 12);
         enemy = new Enemy("Goblin", 100, 50, 1, 50, 50);
     }

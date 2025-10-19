@@ -14,7 +14,7 @@ class EnemyTest {
     @BeforeEach
     void setUp() {
         enemy = new Enemy("Goblin", 100, 10, 2, 50, 20);
-        hero = new Hero("Arthur");
+        hero = new Hero("Arthur", 100);
     }
 
     @Test
