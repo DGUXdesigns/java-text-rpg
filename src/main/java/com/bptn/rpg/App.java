@@ -58,10 +58,10 @@ public class App {
 
         System.out.println("\n--- Main Menu ---");
         for (String option : options) {
-            System.out.println(index++ + ") " + option);
+            System.out.println(" " + index++ + ") " + option);
         }
 
-        System.out.println("0) Exit the game");
+        System.out.println(" 0) Exit the game");
 
         int choice = InputUtil.getInt("\nWhat Will You do?");
 
