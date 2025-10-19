@@ -2,6 +2,7 @@ package com.bptn.rpg.service;
 
 import com.bptn.rpg.model.Inventory;
 import com.bptn.rpg.model.character.Enemy;
+import com.bptn.rpg.model.character.FinalBoss;
 import com.bptn.rpg.model.character.Hero;
 import com.bptn.rpg.model.item.Consumable;
 import com.bptn.rpg.model.item.Item;
@@ -17,6 +18,37 @@ public class BattleService {
     private final Random random = new Random();
     private Hero hero;
     private Enemy enemy;
+
+    public void startFinalBattle(Hero hero) {
+        this.hero = hero;
+        this.enemy = new FinalBoss();
+
+        System.out.println("\n🔥 A fearsome " + enemy.getName() + " descends from the sky! 🔥");
+        System.out.println("""
+                ⚔️ FINAL BOSS BATTLE START! ⚔️
+                ==============================
+                """);
+
+        boolean isHeroTurn = true;
+
+        while (hero.isAlive() && enemy.isAlive()) {
+            if (isHeroTurn) {
+                System.out.println("\n" + hero.getName() + "'s turn");
+                playerTurn();
+            } else {
+                System.out.println("\n" + enemy.getName() + "'s turn");
+                enemyTurn(); // BlackDragon has its own attack logic
+            }
+
+            isHeroTurn = !isHeroTurn;
+        }
+
+        if (hero.getIsFleeing()) {
+            hero.setIsFleeing(false);
+        } else {
+            endBossBattle();
+        }
+    }
 
     public void startBattle(Hero hero, Enemy enemy) {
         this.hero = hero;
@@ -184,6 +216,21 @@ public class BattleService {
             System.out.println(hero.getName() + " defeated " + enemy.getName() + "!");
             hero.gainExperience(enemy.getExperience());
             hero.addGold(enemy.getGold());
+        }
+    }
+
+    private void endBossBattle() {
+        if (!hero.isAlive()) {
+            System.out.println("\n" + hero.getName() + " was slain by the " + enemy.getName() + "...");
+            System.out.println("💀 GAME OVER 💀");
+            System.exit(0);
+        } else if (enemy.getHealth() == 0) {
+            System.out.println("\n🎉 " + hero.getName() + " has defeated the " + enemy.getName() + "! 🎉");
+            hero.gainExperience(enemy.getExperience());
+            hero.addGold(enemy.getGold());
+            System.out.println("🏆 You are victorious! You've slain the Dragon, Congrats on Beating the game 🏆");
+            System.out.println("Thanks For Playing!");
+            System.exit(0);
         }
     }
 }
