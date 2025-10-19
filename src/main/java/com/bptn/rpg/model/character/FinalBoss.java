@@ -10,17 +10,17 @@ public class FinalBoss extends Enemy {
     }
 
     @Override
-    public void attack(Character target) {
+    public int attack(Character target) {
         double chance = Math.random();
 
         if (chance < 0.3) {
             int fireDamage = getStrength() * 2 + random.nextInt(10);
             System.out.println(getName() + " uses FIRE BREATH! It deals " + fireDamage + " damage!");
-            target.takeDamage(fireDamage);
+            return target.takeDamage(fireDamage);
         } else {
             int damage = getStrength() + random.nextInt(5) + (getLevel() * 2);
             System.out.println(getName() + " attacks! It deals " + damage + " damage!");
-            target.takeDamage(damage);
+            return target.takeDamage(damage);
         }
     }
 
