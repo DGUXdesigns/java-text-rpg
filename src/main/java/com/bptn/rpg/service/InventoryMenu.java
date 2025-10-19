@@ -25,7 +25,7 @@ public class InventoryMenu {
 
         while (isOpen) {
             System.out.println("Total Items: " + inventory.size());
-            System.out.println(inventory.toString());
+            System.out.println(inventory);
             System.out.println("0) Exit");
 
             if (!scanner.hasNextInt()) {
@@ -38,7 +38,7 @@ public class InventoryMenu {
 
             if (selection == 0) {
                 isOpen = false;
-            } else if (selection >= 1 || selection <= inventory.size()) {
+            } else if (selection >= 1 && selection <= inventory.size()) {
                 Item selectedItem = inventory.getItem(selection - 1);
 
                 switch (selectedItem.getItemType()) {
