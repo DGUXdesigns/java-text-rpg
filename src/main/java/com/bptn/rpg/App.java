@@ -24,7 +24,7 @@ public class App {
 
         // Game loop
         while (gameRunning) {
-            displayMainMenu(hero, shop, inventoryMenu, battle);
+            startGame(hero, shop, inventoryMenu, battle);
         }
     }
 
@@ -52,7 +52,7 @@ public class App {
         return heroName;
     }
 
-    private static void displayMainMenu(Hero hero, ShopService shop, InventoryMenu inventoryMenu, BattleService battle) {
+    private static void startGame(Hero hero, ShopService shop, InventoryMenu inventoryMenu, BattleService battle) {
         String[] options = {"Shop", "Inventory", "Training Dungeon", "Slay The Dragon"};
         int index = 1;
 
