@@ -24,11 +24,11 @@ public class BattleUtils {
 
         Enemy base = baseMonsters.get(random.nextInt(baseMonsters.size()));
 
-        int scaledHealth = base.getMaxHealth() + (heroLevel * random.nextInt(5, 11));
-        int scaledStrength = base.getStrength() + (heroLevel * random.nextInt(5, 11));
+        int scaledHealth = base.getMaxHealth() + (heroLevel * random.nextInt(5));
+        int scaledStrength = base.getStrength() + (heroLevel * random.nextInt(5));
         int scaledLevel = base.getLevel() + heroLevel / 2;
-        int scaledXP = base.getExperience() + (heroLevel * random.nextInt(10, 21));
-        int scaledGold = base.getGold() + (heroLevel * random.nextInt(15, 30));
+        int scaledXP = base.getExperience() + (heroLevel * random.nextInt(10));
+        int scaledGold = base.getGold() + (heroLevel * random.nextInt(15));
 
         return new Enemy(base.getName(), scaledHealth, scaledStrength, scaledLevel, scaledXP, scaledGold);
     }
