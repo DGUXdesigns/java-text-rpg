@@ -42,7 +42,7 @@ public abstract class Character implements Commands {
         int previousMaxHp = getMaxHealth();
         int previousStrength = getStrength();
 
-        while (experience > (100 * getLevel())) {
+        while (experience >= (100 * getLevel())) {
             levelUp();
             setHealth(maxHealth);
         }
