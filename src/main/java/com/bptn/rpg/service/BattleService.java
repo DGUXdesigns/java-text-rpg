@@ -30,15 +30,15 @@ public class BattleService {
         this.enemy = enemy;
 
         if (isFinalBattle) {
-            System.out.println("""
+            System.out.println(Messages.RED + """
                     
                     ==============================
                     ⚔️ FINAL BOSS BATTLE START! ⚔️
                     ==============================""");
-            System.out.println("\n🔥 A fearsome " + enemy.getName() + " descends from the sky! 🔥\n");
+            System.out.println(Messages.YELLOW + "\n🔥 A fearsome " + enemy.getName() + " descends from the sky! 🔥\n");
 
         } else {
-            System.out.println("""
+            System.out.println(Messages.RED + """
                     
                     =========================
                        ⚔️ Battle start! ⚔️
@@ -58,7 +58,7 @@ public class BattleService {
             if (isHeroTurn) {
                 playerTurn();
             } else {
-                enemyTurn();
+                enemyTurn(isFinalBattle);
             }
 
             isHeroTurn = !isHeroTurn;
@@ -119,13 +119,13 @@ public class BattleService {
                     default -> Messages.invalidOption();
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                Messages.invalidInput();
                 scanner.nextLine();
             }
         }
     }
 
-    private void enemyTurn() {
+    private void enemyTurn(boolean isFinalBoss) {
         if (enemy.isDefending()) {
             enemy.setDefending(false);
         }
@@ -134,7 +134,9 @@ public class BattleService {
 
         if (threshold && random.nextInt(100) < 30) {
             enemy.defend();
-            Messages.defend(enemy);
+            if (!isFinalBoss) {
+                Messages.defend(enemy);
+            }
         } else {
             int damage = enemy.attack(hero);
             Messages.attack(enemy, hero, damage, hero.isDefending());
@@ -143,7 +145,7 @@ public class BattleService {
     }
 
     private void battleUI() {
-        System.out.print(hero.getName() + "'s HP: " + hero.getHealth() + "/" + hero.getMaxHealth());
+        System.out.print(Messages.CYAN + hero.getName() + "'s HP: " + hero.getHealth() + "/" + hero.getMaxHealth());
         System.out.println(" | " + enemy.getName() + "'s HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
         System.out.println("""
                 --- Battle Menu ---
@@ -164,7 +166,7 @@ public class BattleService {
         }
 
         // Display items
-        System.out.println("--- Items ---");
+        System.out.println(Messages.CYAN + "--- Items ---");
         StringBuilder sb = new StringBuilder();
 
         int index = 1;
