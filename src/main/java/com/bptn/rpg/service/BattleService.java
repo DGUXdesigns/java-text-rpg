@@ -216,7 +216,6 @@ public class BattleService {
             System.exit(0);
         } else if (enemy.getHealth() == 0) {
             hero.gainExperience(enemy.getExperience());
-            System.out.println(hero.getExperience());
             hero.addGold(enemy.getGold());
             Messages.enemyDefeated(hero, enemy);
         }
