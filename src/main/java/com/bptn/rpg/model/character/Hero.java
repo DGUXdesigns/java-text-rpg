@@ -52,8 +52,6 @@ public class Hero extends Character {
         int levelBonus = (int) (getLevel() * 1.5);
 
         damage += levelBonus;
-
-        // apply damage to enemy
         return target.takeDamage(damage);
     }
 

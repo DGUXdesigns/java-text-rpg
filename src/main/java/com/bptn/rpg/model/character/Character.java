@@ -1,6 +1,7 @@
 package com.bptn.rpg.model.character;
 
 import com.bptn.rpg.model.item.Consumable;
+import com.bptn.rpg.utils.Messages;
 
 public abstract class Character implements Commands {
     private final String name;
@@ -58,7 +59,7 @@ public abstract class Character implements Commands {
         }
 
         if (previousLevel < level) {
-            System.out.println("\n" + getName() + " is now level " + level + "!");
+            System.out.println(Messages.GREEN + "\n" + getName() + " is now level " + level + "!");
             System.out.println("HP: " + previousMaxHp + " > " + maxHealth);
             System.out.println("Strength: " + previousStrength + " > " + strength);
         }

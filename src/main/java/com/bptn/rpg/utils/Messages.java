@@ -33,8 +33,8 @@ public class Messages {
     }
 
     public static void enemyDefeated(Character hero, Character enemy) {
-        System.out.println(GREEN + hero.getName() + " defeated " + enemy.getName() + "!\n");
-        System.out.println("✨ " + hero.getName() + " gained " + enemy.getExperience() + " experience points\n");
+        System.out.println(GREEN + hero.getName() + " defeated " + enemy.getName() + "!");
+        System.out.println("✨ " + hero.getName() + " gained " + enemy.getExperience() + " experience points");
         System.out.println("\uD83E\uDE99 " + enemy.getGold() + " gold added to your inventory. (\uD83D\uDCB0 Total Gold: " + hero.getGold() + ")\n" + RESET);
     }
 

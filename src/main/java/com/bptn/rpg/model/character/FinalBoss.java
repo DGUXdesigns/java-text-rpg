@@ -19,7 +19,7 @@ public class FinalBoss extends Enemy {
 
         if (wasDefending) {
             damage = getStrength() * 4 + random.nextInt(20);
-            System.out.println(Messages.YELLOW + getName() + " unleashes its ULTIMATE ATTACK after charging up! It deals " + damage + " massive damage!");
+            System.out.println(Messages.YELLOW + getName() + " unleashes its ULTIMATE ATTACK after charging up!");
             wasDefending = false;
             return target.takeDamage(damage);
         }
