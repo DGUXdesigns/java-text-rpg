@@ -18,9 +18,9 @@ public class Messages {
 
     public static void flee(Character hero) {
         if (hero.getIsFleeing()) {
-            System.out.println("\uD83D\uDCA8 " + hero.getName() + " flees from battle!");
+            System.out.println("\uD83D\uDCA8 " + hero.getName() + " flees from battle!\n");
         } else {
-            System.out.println("\uD83E\uDD1A " + hero.getName() + " tried to run but couldn't get away");
+            System.out.println("\uD83E\uDD1A " + hero.getName() + " tried to run but couldn't get away\n");
         }
     }
 

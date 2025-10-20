@@ -40,10 +40,10 @@ public class ShopService {
     private void displayShopMenu(Hero hero) {
         String sb = "=================\n" +
                 "--- " + shop.getName() + " ---\n" +
-                "=================\n";
+                "=================";
         System.out.println(sb);
         System.out.println("Gold: " + hero.getGold() + "\n");
         System.out.println(shop);
-        System.out.println("0. Leave the Shop");
+        System.out.println(" 0) Leave the Shop");
     }
 }

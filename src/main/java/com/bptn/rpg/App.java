@@ -56,7 +56,10 @@ public class App {
         String[] options = {"Shop", "Inventory", "Training Dungeon", "Slay The Dragon"};
         int index = 1;
 
-        System.out.println("\n--- Main Menu ---");
+        System.out.println("=================");
+        System.out.println("--- Main Menu ---");
+        System.out.println("=================");
+        
         for (String option : options) {
             System.out.println(" " + index++ + ") " + option);
         }

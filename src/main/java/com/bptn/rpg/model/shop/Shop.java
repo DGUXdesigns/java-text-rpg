@@ -26,7 +26,7 @@ public class Shop {
         stock.add(new Weapon("Iron Sword", Rarity.UNCOMMON, 100, 13));
         stock.add(new Weapon("Silver Axe", Rarity.RARE, 200, 18));
         stock.add(new Weapon("Knight's Blade", Rarity.EPIC, 350, 25));
-        stock.add(new Weapon("Dragon Slayer", Rarity.LEGENDARY, 500, 40));
+        stock.add(new Weapon("Dragon Slayer", Rarity.LEGENDARY, 500, 50));
         stock.add(new Consumable("Potion", Rarity.COMMON, 25, 100));
         stock.add(new Consumable("Hi-Potion", Rarity.UNCOMMON, 75, 250));
     }
@@ -59,7 +59,7 @@ public class Shop {
         int index = 1;
 
         for (Item item : stock) {
-            sb.append(index++).append(". ").append(item.getItemType()).append(": ").append(item)
+            sb.append(" ").append(index++).append(") ").append(item.getItemType()).append(": ").append(item)
                     .append(" | Price: ").append(item.getPrice()).append(" Gold\n");
         }
 

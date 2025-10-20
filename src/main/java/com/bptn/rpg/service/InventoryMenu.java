@@ -6,6 +6,8 @@ import com.bptn.rpg.model.item.Consumable;
 import com.bptn.rpg.model.item.Item;
 import com.bptn.rpg.model.item.ItemType;
 import com.bptn.rpg.model.item.Weapon;
+import com.bptn.rpg.utils.InputUtil;
+import com.bptn.rpg.utils.Messages;
 
 
 import java.util.Scanner;
@@ -24,17 +26,11 @@ public class InventoryMenu {
         boolean isOpen = true;
 
         while (isOpen) {
-            System.out.println("Total Items: " + inventory.size());
             System.out.println(inventory);
-            System.out.println("\n 0) Exit");
+            System.out.println(" 0) Exit");
 
-            if (!scanner.hasNextInt()) {
-                System.out.println("Please enter a number.");
-                scanner.next();
-                continue;
-            }
 
-            int selection = scanner.nextInt();
+            int selection = InputUtil.getInt("\nPick an item to use or equip");
 
             if (selection == 0) {
                 isOpen = false;
@@ -44,10 +40,9 @@ public class InventoryMenu {
                 switch (selectedItem.getItemType()) {
                     case ItemType.WEAPON -> handleWeapon(selectedItem);
                     case ItemType.CONSUMABLE -> handleConsumable(selectedItem);
-                    default -> System.out.println("Invalid choice, try again.");
                 }
             } else {
-                System.out.println("Invalid choice, please try again.");
+                Messages.invalidOption();
             }
         }
     }

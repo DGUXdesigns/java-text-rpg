@@ -50,14 +50,17 @@ public class Inventory {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("=================\n");
         sb.append("--- Inventory ---\n");
+        sb.append("=================\n");
+        sb.append("Total items: ").append(size()).append("\n");
 
         if (items.isEmpty()) {
-            sb.append("Inventory is empty.");
+            sb.append("\nInventory is empty.\n");
         } else {
             int index = 1;
             for (Item item : items) {
-                sb.append(" ").append(index).append(") ").append(item.toString()).append("\n");
+                sb.append("\n ").append(index).append(") ").append(item.toString()).append("\n");
                 index++;
             }
         }
