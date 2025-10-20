@@ -19,7 +19,7 @@ public class App {
         // Create Game Assets
         Hero hero = new Hero(getHeroName(scanner), 100);
         BattleService battle = new BattleService(scanner);
-        ShopService shop = new ShopService(scanner);
+        ShopService shop = new ShopService();
         InventoryMenu inventoryMenu = new InventoryMenu(hero);
 
         // Game loop

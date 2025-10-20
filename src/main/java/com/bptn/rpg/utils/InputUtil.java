@@ -14,7 +14,7 @@ public class InputUtil {
             String input = scanner.nextLine().trim();
 
             if (input.isEmpty()) {
-                System.out.println("Please enter an option:");
+                Messages.emptyInput();
                 continue;
             }
 
@@ -22,7 +22,7 @@ public class InputUtil {
                 value = Integer.parseInt(input);
                 return value;
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number:");
+                Messages.invalidInput();
             }
         }
     }

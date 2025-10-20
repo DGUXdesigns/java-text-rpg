@@ -9,6 +9,7 @@ import com.bptn.rpg.model.item.Item;
 import com.bptn.rpg.model.item.ItemType;
 import com.bptn.rpg.model.item.Rarity;
 import com.bptn.rpg.model.item.Weapon;
+import com.bptn.rpg.utils.Messages;
 
 public class Shop {
     private final String name;
@@ -45,10 +46,10 @@ public class Shop {
             hero.getInventory().addItem(item);
 
             if (item.getItemType().equals(ItemType.WEAPON)) {
-                stock.remove(item); // Remove Weapon from the shop
+                stock.remove(item);
             }
 
-            System.out.println("Purchased " + item.getName() + " for " + item.getPrice() + " gold");
+            Messages.purchaseSuccess(item);
         }
     }
 
@@ -64,5 +65,4 @@ public class Shop {
 
         return sb.toString();
     }
-
 }

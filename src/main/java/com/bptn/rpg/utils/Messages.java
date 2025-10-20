@@ -1,6 +1,7 @@
 package com.bptn.rpg.utils;
 
 import com.bptn.rpg.model.character.Character;
+import com.bptn.rpg.model.item.Item;
 
 public class Messages {
     public static void attack(Character attacker, Character target, int damage, boolean isDefending) {
@@ -51,5 +52,11 @@ public class Messages {
         System.out.println("Invalid input. Please enter a number");
     }
 
+    public static void emptyInput() {
+        System.out.println("Please enter an option");
+    }
 
+    public static void purchaseSuccess(Item item) {
+        System.out.println("Purchased " + item.getName() + " for " + item.getPrice() + " gold (Gold: ");
+    }
 }
