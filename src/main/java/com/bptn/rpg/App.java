@@ -10,6 +10,7 @@ import com.bptn.rpg.service.InventoryMenu;
 import com.bptn.rpg.service.ShopService;
 import com.bptn.rpg.utils.BattleUtils;
 import com.bptn.rpg.utils.InputUtil;
+import com.bptn.rpg.utils.Messages;
 
 public class App {
     static Scanner scanner = new Scanner(System.in);
@@ -29,11 +30,11 @@ public class App {
     }
 
     private static String getHeroName(Scanner scanner) {
-        String prompt = """
+        String prompt = Messages.CYAN + """
                 =============================
                 ⭐ What is your name Hero? ⭐
                 =============================
-                """;
+                """ + Messages.RESET;
 
         String heroName = "";
 
@@ -42,13 +43,13 @@ public class App {
             heroName = scanner.nextLine().trim();
 
             if (heroName.isEmpty()) {
-                System.out.println("You must enter a name! Please try again.\n");
+                System.out.println(Messages.RED + "You must enter a name! Please try again.\n" + Messages.RESET);
             } else {
                 heroName = heroName.substring(0, 1).toUpperCase() + heroName.substring(1).toLowerCase();
             }
         }
 
-        System.out.println("\nWelcome, " + heroName + "! I wish you luck on you Adventure");
+        System.out.println("\nWelcome, " + heroName + "! Your Quest is to train and slay the dragon\n");
         return heroName;
     }
 
@@ -56,17 +57,17 @@ public class App {
         String[] options = {"Shop", "Inventory", "Training Dungeon", "Slay The Dragon"};
         int index = 1;
 
-        System.out.println("=================");
+        System.out.println(Messages.CYAN + "=================");
         System.out.println("--- Main Menu ---");
         System.out.println("=================");
-        
+
         for (String option : options) {
             System.out.println(" " + index++ + ") " + option);
         }
 
-        System.out.println(" 0) Exit the game");
+        System.out.println("\n 0) Exit the game");
 
-        int choice = InputUtil.getInt("\nWhat Will You do?");
+        int choice = InputUtil.getInt(Messages.RESET + "\nWhat Will You do?");
 
         if (choice == 0) {
             gameRunning = false;

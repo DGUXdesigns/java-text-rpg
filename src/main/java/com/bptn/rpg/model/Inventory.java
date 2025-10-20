@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bptn.rpg.model.item.Item;
 import com.bptn.rpg.model.item.ItemType;
+import com.bptn.rpg.utils.Messages;
 
 public class Inventory {
     private final List<Item> items;
@@ -36,21 +37,21 @@ public class Inventory {
 
     public void addItem(Item item) {
         items.add(item);
-        System.out.println(item.getName() + " added to inventory.");
+        System.out.println(Messages.GREEN + item.getName() + " added to inventory.");
     }
 
     public void removeItem(Item item) {
         boolean removed = items.remove(item);
 
         if (removed) {
-            System.out.println(item.getName() + " removed from inventory");
+            System.out.println(Messages.PURPLE + item.getName() + " removed from inventory");
         }
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("=================\n");
+        sb.append(Messages.CYAN + "=================\n");
         sb.append("--- Inventory ---\n");
         sb.append("=================\n");
         sb.append("Total items: ").append(size()).append("\n");

@@ -21,14 +21,12 @@ public class ShopService {
         while (running) {
             displayShopMenu(hero);
 
-            int choice = InputUtil.getInt("\nWhat would you like to purchase:");
+            int choice = InputUtil.getInt(Messages.RESET + "\nWhat would you like to purchase:");
             List<Item> stock = shop.getStock();
 
             if (choice == 0) {
                 running = false;
-            }
-
-            if (choice >= 1 && choice <= stock.size()) {
+            } else if (choice >= 1 && choice <= stock.size()) {
                 shop.buyItem(hero, stock.get(choice - 1));
             } else {
                 Messages.invalidOption();
@@ -38,11 +36,11 @@ public class ShopService {
     }
 
     private void displayShopMenu(Hero hero) {
-        String sb = "=================\n" +
+        String sb = Messages.CYAN + "=================\n" +
                 "--- " + shop.getName() + " ---\n" +
                 "=================";
         System.out.println(sb);
-        System.out.println("Gold: " + hero.getGold() + "\n");
+        System.out.println(Messages.YELLOW + "Gold: " + hero.getGold() + "\n" + Messages.CYAN);
         System.out.println(shop);
         System.out.println(" 0) Leave the Shop");
     }

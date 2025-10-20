@@ -56,7 +56,7 @@ public class InventoryMenu {
 
         if (choice == 1) {
             hero.equipWeapon((Weapon) weapon);
-            System.out.println(weapon.getName() + " equipped!");
+            System.out.println(Messages.GREEN + weapon.getName() + " equipped!");
         } else {
             System.out.println("You decided not to equip it.");
         }
